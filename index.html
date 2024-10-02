@@ -58,59 +58,76 @@
 
     <h2>Prerequisites</h2>
     <ul>
-        <li>Xiaomi Pad 6 (HyperOS)</li>
+        <li>Xiaomi Pad 6 (HyperOS or MIUI)</li>
         <li>A computer with <a href="https://developer.android.com/studio/releases/platform-tools" target="_blank">ADB and Fastboot</a> installed</li>
         <li><a href="https://en.miui.com/unlock/" target="_blank">Mi Unlock Tool</a></li>
         <li>USB cable (good quality)</li>
         <li>Custom Recovery (.img) file (LineageOS, crDroid)</li>
         <li>Custom ROM (.zip) you wish to install</li>
+        <li>Mi Flash Tool (if downgrading to MIUI Fastboot ROM)</li>
     </ul>
 
     <h2>Part 1: Unlocking the Bootloader on Xiaomi Pad 6</h2>
     <ol>
-        <li>Enable Developer Options: Go to <strong>Settings</strong> > <strong>About Device</strong>, tap <strong>HyperOS version</strong> 7 times.</li>
+        <li>Enable Developer Options: Go to <strong>Settings</strong> > <strong>About Device</strong>, tap <strong>HyperOS version</strong> (or MIUI version) 7 times.</li>
         <li>Enable <strong>OEM Unlocking</strong> and <strong>USB Debugging</strong> in Developer Options.</li>
         <li>Link your <strong>Mi Account</strong> under <strong>Mi Unlock Status</strong>.</li>
         <li>Boot into Fastboot Mode: Power off, hold <strong>Volume Down + Power</strong>.</li>
-        <li>Use Mi Unlock Tool to unlock bootloader. Connect device and click <strong>Unlock</strong>. This process may involve a waiting period.</li>
+        <li>Use Mi Unlock Tool to unlock the bootloader. Connect device and click <strong>Unlock</strong>. This process may involve a waiting period.</li>
         <li>Reboot the device (all data will be erased).</li>
     </ol>
 
-    <h2>Part 2: Flashing Custom Recovery via Fastboot</h2>
+    <h2>Part 2: (Optional) Downgrading from HyperOS to MIUI</h2>
+    <p>If you're currently on HyperOS, it's recommended to downgrade to MIUI before flashing a custom ROM. If you're already on MIUI, you can skip this step.</p>
     <ol>
-        <li>Download the custom recovery (e.g., <code>lineage-recovery.img</code>).</li>
+        <li>Download the MIUI Fastboot ROM from the official Xiaomi website for your Xiaomi Pad 6.</li>
+        <li>Boot into Fastboot Mode (hold <strong>Volume Down + Power</strong>).</li>
+        <li>Install <a href="https://www.xiaomiflash.com/" target="_blank">Mi Flash Tool</a> on your computer.</li>
+        <li>Open Mi Flash Tool, connect your device, and load the extracted MIUI Fastboot ROM into the tool.</li>
+        <li>Make sure to select the option <strong>"Flash without locking"</strong> to prevent the bootloader from being locked again.</li>
+        <li>Click <strong>Flash</strong> and wait for the process to complete. Your device will reboot into MIUI.</li>
+    </ol>
+
+    <h2>Part 3: Flashing Custom Recovery via Fastboot</h2>
+    <ol>
+        <li>Download the custom recovery (e.g., <code>lineage-recovery.img</code> or <code>crdroid-recovery.img</code>).</li>
         <li>Boot into Fastboot Mode by holding <strong>Volume Down + Power</strong>.</li>
-        <li>Use the following command to flash the recovery:
-            <pre>fastboot flash boot recovery.img</pre>
+        <li>Use the following commands to flash the custom recovery components:
+            <pre>fastboot flash boot boot.img</pre>
+            <pre>fastboot flash vendor_boot vendor_boot.img</pre>
+            <pre>fastboot flash dtbo dtbo.img</pre>
         </li>
-        <li>Reboot into recovery:
+        <li>Reboot into recovery using the following command:
             <pre>fastboot reboot recovery</pre>
         </li>
     </ol>
 
-    <h2>Part 3: Flashing a Custom ROM via ADB Sideload</h2>
+    <h2>Part 4: Flashing a Custom ROM via ADB Sideload</h2>
     <ol>
-        <li>Download the ROM you wish to install in <code>.zip</code> format.</li>
-        <li>Boot into recovery (hold <strong>Volume Up + Power</strong>).</li>
-        <li>Perform a factory reset: Go to <strong>Wipe</strong> in recovery, then select <strong>Factory Reset</strong>.</li>
-        <li>Enable ADB Sideload: Navigate to <strong>Advanced</strong> > <strong>ADB Sideload</strong> and swipe to start.</li>
-        <li>Sideload the ROM:
+        <li>Download the custom ROM you wish to install in <code>.zip</code> format.</li>
+        <li>Boot into the custom recovery (hold <strong>Volume Up + Power</strong>).</li>
+        <li>Perform a factory reset by navigating to <strong>Wipe</strong> > <strong>Factory Reset</strong> in the custom recovery.</li>
+        <li>Enable ADB Sideload: In recovery, go to <strong>Advanced</strong> > <strong>ADB Sideload</strong> and swipe to start.</li>
+        <li>Connect your Xiaomi Pad 6 to your computer via USB.</li>
+        <li>Sideload the ROM using the following command:
             <pre>adb sideload customrom.zip</pre>
+            Replace <code>customrom.zip</code> with the name of the custom ROM file.
         </li>
-        <li>Wait for the installation to complete. Optionally, wipe cache/dalvik.</li>
-        <li>Reboot the system.</li>
+        <li>Wait for the installation to complete. Optionally, wipe cache and dalvik after flashing.</li>
+        <li>Reboot to the system.</li>
     </ol>
 
     <h3>Troubleshooting and Important Notes</h3>
     <ul>
-        <li>If stuck in a boot loop, try factory reset or re-flashing the ROM.</li>
-        <li>If <strong>ADB</strong> is not recognizing the device, ensure USB Debugging is enabled and the proper drivers are installed.</li>
-        <li>To exit recovery mode, re-flash the stock ROM via Fastboot.</li>
+        <li>If stuck in a boot loop, boot into recovery and perform a factory reset, or try re-flashing the custom ROM.</li>
+        <li>If ADB is not recognizing your device, ensure USB Debugging is enabled and that you have the correct drivers installed.</li>
+        <li>If you accidentally lock the bootloader after flashing MIUI, you will need to unlock it again to proceed with custom ROM installation.</li>
+        <li>Make sure to select "Flash without locking" when flashing MIUI to keep the bootloader unlocked.</li>
     </ul>
 
     <h3>Summary</h3>
     <p>
-        Unlock the bootloader using Mi Unlock Tool, flash custom recovery using Fastboot, and install a custom ROM via ADB Sideload. Remember, unlocking and flashing will wipe your device, so back up important data.
+        Unlock the bootloader using Mi Unlock Tool, downgrade to MIUI if needed (without locking the bootloader), flash custom recovery using Fastboot, and install a custom ROM via ADB Sideload. Ensure to back up important data, as unlocking and flashing will wipe your device.
     </p>
 
     <footer>
