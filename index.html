@@ -41,6 +41,7 @@
             background: #f5f5f5;
             padding: 10px;
             border-radius: 5px;
+            overflow-x: auto;
         }
         footer {
             text-align: center;
@@ -53,43 +54,64 @@
 <body>
 
 <div class="container">
-    <h1>Guide: Unlocking Bootloader, Flashing Recovery & ROM on Xiaomi Pad 6</h1>
+    <h1>Full Guide: Unlocking Bootloader, Flashing Recovery & ROM on Xiaomi Pad 6</h1>
 
     <h2>Prerequisites</h2>
     <ul>
         <li>Xiaomi Pad 6 (HyperOS)</li>
-        <li>ADB and Fastboot installed on PC (<a href="https://developer.android.com/studio/releases/platform-tools" target="_blank">Download here</a>)</li>
-        <li>Mi Unlock Tool (<a href="https://en.miui.com/unlock/" target="_blank">Download here</a>)</li>
-        <li>USB cable, custom recovery .img, custom ROM .zip</li>
+        <li>A computer with <a href="https://developer.android.com/studio/releases/platform-tools" target="_blank">ADB and Fastboot</a> installed</li>
+        <li><a href="https://en.miui.com/unlock/" target="_blank">Mi Unlock Tool</a></li>
+        <li>USB cable (good quality)</li>
+        <li>Custom Recovery (.img) file (LineageOS, crDroid)</li>
+        <li>Custom ROM (.zip) you wish to install</li>
     </ul>
 
-    <h2>Part 1: Unlocking Bootloader</h2>
+    <h2>Part 1: Unlocking the Bootloader on Xiaomi Pad 6</h2>
     <ol>
-        <li>Enable Developer Options: Settings > About Device > Tap HyperOS version 7 times.</li>
-        <li>Enable OEM Unlocking and USB Debugging.</li>
-        <li>Bind Mi Account in Mi Unlock Status.</li>
-        <li>Boot into Fastboot mode and unlock via Mi Unlock Tool.</li>
-        <li>Reboot (note: data will be wiped).</li>
+        <li>Enable Developer Options: Go to <strong>Settings</strong> > <strong>About Device</strong>, tap <strong>HyperOS version</strong> 7 times.</li>
+        <li>Enable <strong>OEM Unlocking</strong> and <strong>USB Debugging</strong> in Developer Options.</li>
+        <li>Link your <strong>Mi Account</strong> under <strong>Mi Unlock Status</strong>.</li>
+        <li>Boot into Fastboot Mode: Power off, hold <strong>Volume Down + Power</strong>.</li>
+        <li>Use Mi Unlock Tool to unlock bootloader. Connect device and click <strong>Unlock</strong>. This process may involve a waiting period.</li>
+        <li>Reboot the device (all data will be erased).</li>
     </ol>
 
     <h2>Part 2: Flashing Custom Recovery via Fastboot</h2>
     <ol>
-        <li>Download the custom recovery image file (e.g., `lineage-recovery.img`).</li>
-        <li>Boot into Fastboot Mode: Power off, hold Volume Down + Power.</li>
-        <li>Use the command: <pre>fastboot flash boot recovery.img</pre></li>
-        <li>Reboot into recovery: <pre>fastboot reboot recovery</pre></li>
+        <li>Download the custom recovery (e.g., <code>lineage-recovery.img</code>).</li>
+        <li>Boot into Fastboot Mode by holding <strong>Volume Down + Power</strong>.</li>
+        <li>Use the following command to flash the recovery:
+            <pre>fastboot flash boot recovery.img</pre>
+        </li>
+        <li>Reboot into recovery:
+            <pre>fastboot reboot recovery</pre>
+        </li>
     </ol>
 
     <h2>Part 3: Flashing a Custom ROM via ADB Sideload</h2>
     <ol>
-        <li>Download the custom ROM in .zip format.</li>
-        <li>Boot into recovery mode and perform a factory reset.</li>
-        <li>ADB Sideload: <pre>adb sideload customrom.zip</pre></li>
-        <li>Wipe Cache/Dalvik (optional), then reboot to system.</li>
+        <li>Download the ROM you wish to install in <code>.zip</code> format.</li>
+        <li>Boot into recovery (hold <strong>Volume Up + Power</strong>).</li>
+        <li>Perform a factory reset: Go to <strong>Wipe</strong> in recovery, then select <strong>Factory Reset</strong>.</li>
+        <li>Enable ADB Sideload: Navigate to <strong>Advanced</strong> > <strong>ADB Sideload</strong> and swipe to start.</li>
+        <li>Sideload the ROM:
+            <pre>adb sideload customrom.zip</pre>
+        </li>
+        <li>Wait for the installation to complete. Optionally, wipe cache/dalvik.</li>
+        <li>Reboot the system.</li>
     </ol>
 
-    <h3>Troubleshooting</h3>
-    <p>If stuck in bootloop, perform a factory reset or try re-flashing. Ensure USB Debugging is enabled and your drivers are correctly installed.</p>
+    <h3>Troubleshooting and Important Notes</h3>
+    <ul>
+        <li>If stuck in a boot loop, try factory reset or re-flashing the ROM.</li>
+        <li>If <strong>ADB</strong> is not recognizing the device, ensure USB Debugging is enabled and the proper drivers are installed.</li>
+        <li>To exit recovery mode, re-flash the stock ROM via Fastboot.</li>
+    </ul>
+
+    <h3>Summary</h3>
+    <p>
+        Unlock the bootloader using Mi Unlock Tool, flash custom recovery using Fastboot, and install a custom ROM via ADB Sideload. Remember, unlocking and flashing will wipe your device, so back up important data.
+    </p>
 
     <footer>
         Guide and website made by: rmux
