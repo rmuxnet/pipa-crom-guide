@@ -1,7 +1,3 @@
-Got it! Here's a revised guide, including the method for flashing custom recoveries like LineageOS or crDroid recovery via `fastboot flash boot` and using ADB sideload for the custom ROM installation.
-
----
-
 ### Full Guide: Unlocking Bootloader, Flashing Custom Recovery, and Flashing Custom ROM on Xiaomi Pad 6 (HyperOS)
 
 This guide covers unlocking the bootloader on a **Xiaomi Pad 6** running **HyperOS**, flashing a custom recovery (like LineageOS or crDroid recovery), and using **ADB sideload** to flash a custom ROM.
